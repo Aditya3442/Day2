@@ -1,0 +1,38 @@
+class meeting{
+    int start;
+    int end;
+    meeting(int start,int end){
+        this.start=start;
+        this.end=end;
+    }
+}    
+class meetingComparator implements Comparator<meeting>{
+    public int compare(meeting n1,meeting n2){
+        return n1.end-n2.end;
+    }
+          
+}
+class Solution{
+public int maxMeetings(int n, int start[], int end[]) {
+    
+    List<meeting> l=new ArrayList<>();
+    for(int i=0;i<n;i++){
+        l.add(new meeting(start[i],end[i]));
+    }
+    
+    meetingComparator m=new meetingComparator();
+    Collections.sort(l,m);
+    
+    int count=1;
+    int limit=l.get(0).end;
+    for(int i=1;i<n;i++){
+        if(l.get(i).start>limit){
+            limit=l.get(i).end;
+            count++;
+        }
+    }
+    return count;
+    
+}
+
+}
