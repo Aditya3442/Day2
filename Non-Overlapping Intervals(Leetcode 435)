@@ -1,0 +1,33 @@
+class interval{
+    int start;
+    int end;
+    interval(int start,int end){
+        this.start=start;
+        this.end=end;
+    }
+}
+class inter implements Comparator<interval>{
+    public int compare(interval n1,interval n2){
+        return n1.end-n2.end;
+    }
+}
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        List<interval> l=new ArrayList<>();
+        for(int i=0;i<intervals.length;i++){
+            l.add(new interval(intervals[i][0],intervals[i][1]));
+        }
+        
+        Collections.sort(l,new inter());
+        
+        int limit=l.get(0).end;
+        int count=1;
+        for(int i=1;i<intervals.length;i++){
+            if(l.get(i).start>=limit){
+                limit=l.get(i).end;
+                count++;
+            }
+        }
+        return intervals.length-count;
+    }
+}
